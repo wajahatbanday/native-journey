@@ -10,65 +10,43 @@ import {
   View,
 } from 'react-native';
 import {NavBarData} from './constants';
+import {BoxComponent} from './components';
+import {SignInForm} from './components/SignInForm';
 
 export default function App() {
-  const [count, setCount] = useState(0);
   const [navItem, setNavItem] = useState('');
   const [modal, setModal] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
 
-  const handlePress = () => {
-    setCount(count + 1);
+  const checkSignedIn = (newState: boolean) => {
+    setSignedIn(newState);
   };
+
   return (
     <View
       style={{
         height: '100%',
         width: '100%',
-        borderWidth: 1,
-        borderColor: '#ff5454',
       }}>
       <SafeAreaView style={styles.safeArea}></SafeAreaView>
-      <View style={styles.centerBox}>
-        <Text style={styles.text}>Welcome, SuperUser!</Text>
-      </View>
-      <View style={styles.centerBox}>
-        <Image
-          source={{uri: 'https://picsum.photos/200'}}
-          style={styles.image1}
-        />
-        {/* <Image source={require('./public/home.png')} style={styles.image1} /> */}
-      </View>
-      <View style={styles.centerBox}>
-        <Text style={styles.text}>{`Count is ${count}`}</Text>
-        <View style={styles.button}>
-          <Button onPress={handlePress} title="Count++" />
+      {signedIn ? (
+        <>
+          <View style={styles.centerBox}>
+            <Text style={styles.text}>Welcome, SuperUser!</Text>
+          </View>
+          <View style={styles.centerBox}>
+            <Image
+              source={{uri: 'https://picsum.photos/200'}}
+              style={styles.image1}
+            />
+          </View>
+        </>
+      ) : (
+        <View style={styles.signIn}>
+          <Button onPress={() => setModal(prev => !prev)} title="Sign In" />
         </View>
-      </View>
-      <View style={styles.centerBox}>
-        <Text>{`You clicked on ${navItem}`}</Text>
-      </View>
-      <View style={styles.fixedView}>
-        <View style={styles.row}>
-          {NavBarData.map((icon, index) => (
-            <TouchableOpacity
-              onPress={() => setNavItem(icon.label)}
-              key={index}>
-              <View style={styles.navItem}>
-                <Image
-                  source={navItem === icon.label ? icon.activeIcon : icon.icon}
-                  style={{
-                    width: 32,
-                    height: 32,
-                  }}
-                />
-              </View>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
-      <View style={styles.button}>
-        <Button onPress={() => setModal(prev => !prev)} title="Modal" />
-      </View>
+      )}
+
       {modal ? (
         <View style={styles.fullScreen}>
           <View style={styles.modal}>
@@ -76,10 +54,42 @@ export default function App() {
               <Button
                 title="X"
                 onPress={() => setModal(false)}
-                color={'#ff5454'}
+                color={'#f9a602'}
               />
             </View>
+            <SignInForm
+              onSignIn={() => {
+                setModal(false);
+                setSignedIn(true);
+              }}
+            />
           </View>
+        </View>
+      ) : null}
+      {signedIn ? (
+        <View style={styles.fixedView}>
+          <View style={styles.row}>
+            {NavBarData.map((icon, index) => (
+              <TouchableOpacity
+                onPress={() => setNavItem(icon.label)}
+                key={index}>
+                <View style={styles.navItem}>
+                  <Image
+                    source={icon.icon}
+                    style={{
+                      width: 32,
+                      height: 32,
+                    }}
+                  />
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      ) : null}
+      {signedIn ? (
+        <View style={styles.signOut}>
+          <Button onPress={() => setSignedIn(false)} title="Log Out" />
         </View>
       ) : null}
     </View>
@@ -87,7 +97,25 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  close: {position: 'absolute', top: 5, right: 5},
+  signOut: {
+    width: '50%',
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    backgroundColor: '#f9a602',
+    borderRadius: 10,
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 100,
+  },
+  signIn: {
+    width: '50%',
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    backgroundColor: '#f9a602',
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+  close: {position: 'absolute', top: 5, right: 5, padding: 5},
   fullScreen: {
     width: '100%',
     height: '100%',
@@ -98,16 +126,18 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
   },
   modal: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '80%',
     height: '70%',
     backgroundColor: '#fff',
     shadowColor: '#000',
     shadowOffset: {width: 5, height: 5},
     borderRadius: 15,
-    borderWidth: 1,
   },
   navItem: {
     display: 'flex',
@@ -137,9 +167,7 @@ const styles = StyleSheet.create({
   button: {
     paddingHorizontal: 20,
     paddingVertical: 5,
-    backgroundColor: '#ff5454',
-    borderWidth: 1,
-    borderColor: '#000',
+    backgroundColor: '#f9a602',
     borderRadius: 10,
   },
   safeArea: {
