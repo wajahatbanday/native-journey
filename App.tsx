@@ -9,9 +9,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {NavBarData} from './constants';
-import {BoxComponent} from './components';
-import {SignInForm} from './components/SignInForm';
+import {CardData, NavBarData} from './constants';
+import {SignInForm} from './components';
+import {ProductCard} from './components/ProductCard';
+import {ProductList} from './components/ProductList';
 
 export default function App() {
   const [navItem, setNavItem] = useState('');
@@ -32,7 +33,7 @@ export default function App() {
       {signedIn ? (
         <>
           <View style={styles.centerBox}>
-            <Text style={styles.text}>Welcome, SuperUser!</Text>
+            <Text style={styles.text}>Welcome, Wajahat!</Text>
           </View>
           <View style={styles.centerBox}>
             <Image
@@ -40,10 +41,20 @@ export default function App() {
               style={styles.image1}
             />
           </View>
+          <ProductList />
         </>
       ) : (
-        <View style={styles.signIn}>
-          <Button onPress={() => setModal(prev => !prev)} title="Sign In" />
+        <View style={styles.logoSignIn}>
+          <View>
+            <Image style={styles.logo} source={require('./images/harud.png')} />
+          </View>
+          <View style={styles.signIn}>
+            <Button
+              onPress={() => setModal(prev => !prev)}
+              title="Sign In"
+              color={'#fff'}
+            />
+          </View>
         </View>
       )}
 
@@ -89,7 +100,11 @@ export default function App() {
       ) : null}
       {signedIn ? (
         <View style={styles.signOut}>
-          <Button onPress={() => setSignedIn(false)} title="Log Out" />
+          <Button
+            onPress={() => setSignedIn(false)}
+            title="Log Out"
+            color={'#fff'}
+          />
         </View>
       ) : null}
     </View>
@@ -97,6 +112,19 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  logoSignIn: {
+    width: '100%',
+    height: 600,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 250,
+    height: 100,
+    resizeMode: 'cover',
+  },
   signOut: {
     width: '50%',
     paddingHorizontal: 20,
@@ -171,7 +199,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   safeArea: {
-    marginBottom: 30,
+    marginBottom: 10,
     backgroundColor: '#f9a602',
   },
   centerBox: {

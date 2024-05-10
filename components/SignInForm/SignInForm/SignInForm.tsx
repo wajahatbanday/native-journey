@@ -46,6 +46,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({onSignIn}) => {
               autoCapitalize="none"
             />
             <TextInput
+              secureTextEntry={true}
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
               value={values.password}
@@ -54,7 +55,11 @@ export const SignInForm: React.FC<SignInFormProps> = ({onSignIn}) => {
               autoCapitalize="none"
             />
             <View style={styles.button}>
-              <Button onPress={(e: any) => handleSubmit(e)} title="Submit" />
+              <Button
+                onPress={(e: any) => handleSubmit(e)}
+                title="Submit"
+                color={'#fff'}
+              />
             </View>
           </View>
         )}
