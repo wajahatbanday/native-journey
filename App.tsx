@@ -9,9 +9,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {CardData, NavBarData} from './constants';
+import {NavBarData} from './constants';
 import {SignInForm} from './components';
-import {ProductCard} from './components/ProductCard';
 import {ProductList} from './components/ProductList';
 
 export default function App() {
@@ -32,14 +31,26 @@ export default function App() {
       <SafeAreaView style={styles.safeArea}></SafeAreaView>
       {signedIn ? (
         <>
-          <View style={styles.centerBox}>
-            <Text style={styles.text}>Welcome, Wajahat!</Text>
-          </View>
-          <View style={styles.centerBox}>
-            <Image
-              source={{uri: 'https://picsum.photos/200'}}
-              style={styles.image1}
-            />
+          <View style={styles.header}>
+            <View style={styles.userInfo}>
+              <View style={styles.centerBox}>
+                <Image
+                  source={{uri: 'https://picsum.photos/200'}}
+                  style={styles.userPicture}
+                />
+              </View>
+              <View style={styles.centerBox}>
+                <Text style={styles.text}>Welcome, Wajahat!</Text>
+              </View>
+            </View>
+            <View style={styles.logoutContainer}>
+              <TouchableOpacity onPress={() => setSignedIn(false)}>
+                <Image
+                  source={require('./images/logout.png')}
+                  style={styles.logout}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
           <ProductList />
         </>
@@ -98,20 +109,32 @@ export default function App() {
           </View>
         </View>
       ) : null}
-      {signedIn ? (
-        <View style={styles.signOut}>
-          <Button
-            onPress={() => setSignedIn(false)}
-            title="Log Out"
-            color={'#fff'}
-          />
-        </View>
-      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  logout: {
+    resizeMode: 'cover',
+    height: '100%',
+    width: '100%',
+  },
+  userInfo: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  header: {
+    borderBottomWidth: 0,
+    borderBottomColor: '#f9a602',
+    backgroundColor: '#f9a602',
+    padding: 5,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
   logoSignIn: {
     width: '100%',
     height: 600,
@@ -125,15 +148,9 @@ const styles = StyleSheet.create({
     height: 100,
     resizeMode: 'cover',
   },
-  signOut: {
-    width: '50%',
-    paddingHorizontal: 20,
-    paddingVertical: 5,
-    backgroundColor: '#f9a602',
-    borderRadius: 10,
-    alignSelf: 'center',
-    position: 'absolute',
-    bottom: 100,
+  logoutContainer: {
+    width: 25,
+    height: 25,
   },
   signIn: {
     width: '50%',
@@ -199,7 +216,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   safeArea: {
-    marginBottom: 10,
     backgroundColor: '#f9a602',
   },
   centerBox: {
@@ -212,9 +228,9 @@ const styles = StyleSheet.create({
   text: {
     color: '#000',
   },
-  image1: {
-    width: 60,
-    height: 60,
+  userPicture: {
+    width: 40,
+    height: 40,
     borderRadius: 999,
   },
 });
