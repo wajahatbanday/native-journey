@@ -5,14 +5,16 @@ import {ProductCard} from '../ProductCard';
 export const ProductList = () => {
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.text}>Product List</Text>
-      </View>
       <ScrollView>
-        <View style={styles.listContainer}>
-          {CardData.map((card, index) => (
-            <ProductCard title={card.title} image={card.image} key={index} />
-          ))}
+        <View style={styles.scrollContent}>
+          <View>
+            <Text style={styles.text}>Product List</Text>
+          </View>
+          <View style={styles.listContainer}>
+            {CardData.map((card, index) => (
+              <ProductCard title={card.title} image={card.image} key={index} />
+            ))}
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -20,6 +22,13 @@ export const ProductList = () => {
 };
 
 const styles = StyleSheet.create({
+  scrollContent: {
+    display: 'flex',
+    // flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 20,
+  },
   container: {
     display: 'flex',
     flexDirection: 'column',

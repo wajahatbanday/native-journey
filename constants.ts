@@ -2,22 +2,22 @@ export const NavBarData = [
   {
     label: 'Home',
     icon: require('./images/home.png'),
-    activeIcon: require('./images/search.png'),
+    nav: 'HomeScreen',
   },
   {
     label: 'Search',
     icon: require('./images/search.png'),
-    activeIcon: require('./images/home.png'),
+    nav: 'ProfileScreen',
   },
   {
     label: 'Discover',
     icon: require('./images/discover.png'),
-    activeIcon: require('./images/profile.png'),
+    nav: 'ProfileScreen',
   },
   {
     label: 'Profile',
     icon: require('./images/profile.png'),
-    activeIcon: require('./images/discover.png'),
+    nav: 'ProfileScreen',
   },
 ];
 
