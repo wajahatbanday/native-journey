@@ -1,27 +1,24 @@
-import {Formik, FormikHelpers, FormikProps} from 'formik';
-import {useState} from 'react';
+import React from 'react';
+import {Formik, FormikProps} from 'formik';
 import {Button, StyleSheet, TextInput, View} from 'react-native';
+import {useAuth} from '../../../context/AuthContext';
 
 type FormValues = {
   email: string;
   password: string;
 };
 
-type SignInFormProps = {
-  onSignIn: () => void;
-};
+export const SignInForm = () => {
+  const {login} = useAuth();
 
-export const SignInForm: React.FC<SignInFormProps> = ({onSignIn}) => {
-  const [signInSuccess, setSignInSuccess] = useState(false);
-  const handleSubmit = (
-    values: FormValues,
-    {setSubmitting}: FormikHelpers<FormValues>,
-  ) => {
+  const handleSubmit = async (values: FormValues) => {
+    console.log(values);
     if (values.email === 'dev@wajahat.io' && values.password === 'admin@123') {
-      console.log(values);
-      onSignIn();
-      setSubmitting(false);
-      setSignInSuccess(true);
+      try {
+        await login('dummy-token');
+      } catch (error) {
+        console.error('Login failed:', error);
+      }
     } else {
       console.log('Check Credentials');
     }
@@ -30,12 +27,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({onSignIn}) => {
   return (
     <View style={styles.container}>
       <Formik initialValues={{email: '', password: ''}} onSubmit={handleSubmit}>
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          values,
-        }: FormikProps<FormValues>) => (
+        {({handleChange, handleBlur, values}: FormikProps<FormValues>) => (
           <View style={styles.formContainer}>
             <TextInput
               onChangeText={handleChange('email')}
@@ -56,9 +48,9 @@ export const SignInForm: React.FC<SignInFormProps> = ({onSignIn}) => {
             />
             <View style={styles.button}>
               <Button
-                onPress={(e: any) => handleSubmit(e)}
-                title="Submit"
+                title="Login"
                 color={'#fff'}
+                onPress={() => handleSubmit(values)}
               />
             </View>
           </View>
@@ -70,8 +62,6 @@ export const SignInForm: React.FC<SignInFormProps> = ({onSignIn}) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    width: '80%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
@@ -80,7 +70,6 @@ const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
     height: '80%',
-
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -90,8 +79,8 @@ const styles = StyleSheet.create({
   textInput: {
     borderWidth: 1,
     borderColor: '#f9a602',
-    borderRadius: 15,
-    width: 200,
+    borderRadius: 5,
+    width: 300,
     height: 40,
     paddingHorizontal: 10,
   },
