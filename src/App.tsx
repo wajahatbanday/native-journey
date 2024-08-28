@@ -9,6 +9,7 @@ import {LoginScreen} from './screens/LoginScreen';
 import {NavBarIcon} from './components/NavBarIcon';
 import {SearchScreen} from './screens/SearchScreen';
 import {DiscoverScreen} from './screens/DiscoverScreen';
+import {ProductScreen} from './screens/ProductScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -16,7 +17,8 @@ const Tab = createBottomTabNavigator();
 function HomeStack() {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="ProductScreen" component={ProductScreen} />
     </Stack.Navigator>
   );
 }
@@ -24,7 +26,7 @@ function HomeStack() {
 function SearchStack() {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Search" component={SearchScreen} />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
     </Stack.Navigator>
   );
 }
@@ -32,7 +34,7 @@ function SearchStack() {
 function DiscoverStack() {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Search" component={DiscoverScreen} />
+      <Stack.Screen name="DiscoverScreen" component={DiscoverScreen} />
     </Stack.Navigator>
   );
 }
@@ -40,7 +42,7 @@ function DiscoverStack() {
 function ProfileStack() {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
     </Stack.Navigator>
   );
 }
@@ -81,7 +83,7 @@ function AppNavigator() {
 
   return (
     <NavigationContainer>
-      {!isLoggedIn ? (
+      {isLoggedIn ? (
         <MainNavigator />
       ) : (
         <Stack.Navigator screenOptions={{headerShown: false}}>

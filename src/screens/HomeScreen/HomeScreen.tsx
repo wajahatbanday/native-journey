@@ -9,9 +9,25 @@ import {
 } from 'react-native';
 import {ProductList} from '../../components/ProductList';
 import {useAuth} from '../../context/AuthContext';
+import {useNavigation} from '@react-navigation/native';
+import {CardData} from '../../constants';
+import {RootStackParamList} from '../../types';
+import {StackNavigationProp} from '@react-navigation/stack';
+
+type HomeScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'HomeScreen'
+>;
 
 export const HomeScreen = () => {
   const {logout} = useAuth();
+
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+
+  const handleProductPress = (product: (typeof CardData)[0]) => {
+    navigation.navigate('ProductScreen', {data: product});
+  };
+
   return (
     <View style={styles.viewContainer}>
       <SafeAreaView style={styles.safeArea} />
@@ -36,28 +52,16 @@ export const HomeScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <ProductList />
-      {/* <View style={styles.logoSignIn}>
-        <View>
-          <Image
-            style={styles.logo}
-            source={require('../../../images/harud.png')}
-          />
-        </View>
-        <View style={styles.signIn}>
-          <Button
-            onPress={() => setModal(prev => !prev)}
-            title="Sign In"
-            color={'#fff'}
-          />
-        </View>
-      </View> */}
+      <ProductList onProductPress={handleProductPress} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  viewContainer: {width: '100%', height: '100%'},
+  viewContainer: {
+    width: '100%',
+    height: '100%',
+  },
   iconImage: {width: 32, height: 32},
   logout: {
     resizeMode: 'cover',

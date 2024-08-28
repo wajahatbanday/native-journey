@@ -1,18 +1,24 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {CardData} from '../../constants';
 import {ProductCard} from '../ProductCard';
+import React from 'react';
 
-export const ProductList = () => {
+type ProductListProps = {
+  onProductPress: (data: (typeof CardData)[0]) => void;
+};
+
+export const ProductList: React.FC<ProductListProps> = ({onProductPress}) => {
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.scrollContent}>
-          <View>
-            <Text style={styles.text}>Product List</Text>
-          </View>
           <View style={styles.listContainer}>
             {CardData.map((card, index) => (
-              <ProductCard title={card.title} image={card.image} key={index} />
+              <TouchableOpacity
+                key={index}
+                onPress={() => onProductPress(card)}>
+                <ProductCard title={card.title} image={card.image} />
+              </TouchableOpacity>
             ))}
           </View>
         </View>
@@ -24,18 +30,16 @@ export const ProductList = () => {
 const styles = StyleSheet.create({
   scrollContent: {
     display: 'flex',
-    // flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 20,
+    paddingBottom: 150,
+    paddingTop: 20,
   },
   container: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 20,
-    paddingVertical: 20,
   },
   text: {
     fontSize: 24,
@@ -44,7 +48,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'center',
-    // alignItems: 'center',
     gap: 20,
   },
 });
