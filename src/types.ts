@@ -3,4 +3,6 @@ export type RootStackParamList = {
   ProductScreen: {
     data: {title: string; image: string; price: number; description: string};
   };
+  ProfileScreen: undefined;
+  SettingsScreen: undefined;
 };

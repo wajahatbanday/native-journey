@@ -10,6 +10,7 @@ import {NavBarIcon} from './components/NavBarIcon';
 import {SearchScreen} from './screens/SearchScreen';
 import {DiscoverScreen} from './screens/DiscoverScreen';
 import {ProductScreen} from './screens/ProductScreen';
+import {SettingsScreen} from './screens/SettingsScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,6 +44,7 @@ function ProfileStack() {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
     </Stack.Navigator>
   );
 }
