@@ -1,15 +1,14 @@
-import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
+import {Text, SafeAreaView} from 'react-native';
 import React from 'react';
+import {Box} from '../../components';
 
 export const SettingsScreen = () => {
   return (
-    <View style={styles.parentContainer}>
+    <Box width={'100%'} height={'100%'}>
       <SafeAreaView />
-      <Text>React Native</Text>
-    </View>
+      <Box width={'100%'} height={'90%'} centered>
+        <Text>Settings With Shopify Restyle</Text>
+      </Box>
+    </Box>
   );
 };
-
-const styles = StyleSheet.create({
-  parentContainer: {width: '100%', height: '100%'},
-});

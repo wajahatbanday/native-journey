@@ -11,6 +11,8 @@ import {SearchScreen} from './screens/SearchScreen';
 import {DiscoverScreen} from './screens/DiscoverScreen';
 import {ProductScreen} from './screens/ProductScreen';
 import {SettingsScreen} from './screens/SettingsScreen';
+import {AppThemeProvider} from './theme/AppThemeProvider';
+import {AppStateContextProvider} from './state/AppState';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -98,8 +100,12 @@ function AppNavigator() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <AppNavigator />
-    </AuthProvider>
+    <AppStateContextProvider>
+      <AppThemeProvider>
+        <AuthProvider>
+          <AppNavigator />
+        </AuthProvider>
+      </AppThemeProvider>
+    </AppStateContextProvider>
   );
 }
